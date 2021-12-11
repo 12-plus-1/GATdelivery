@@ -124,8 +124,8 @@ A = tf.convert_to_tensor(A, tf.float32)
 
 l2 = 5e-4
 rate = 0.4
-epochs = 300
-learning_rate = 5e-3 
+epochs = 200
+learning_rate = 0.01
 patience = 100
 labels_encoded, classes = encode_label(labels)
 
@@ -154,7 +154,7 @@ model.fit([features, A],
           labels_encoded,
           sample_weight=train_mask,
           epochs=epochs,
-          batch_size=num_nodes,
+          batch_size=140,
           validation_data=validation_data,
           shuffle=False,
           callbacks=[
