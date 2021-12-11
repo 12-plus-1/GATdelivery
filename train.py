@@ -157,10 +157,10 @@ model.fit([features, A],
           epochs=epochs,
           batch_size=140,
           validation_data=validation_data,
-          shuffle=False,
+          shuffle=False, callbacks=[ tf.keras.callbacks.EarlyStopping(patience=patience,  restore_best_weights=True)]
           )
 
-# callbacks=[ tf.keras.callbacks.EarlyStopping(patience=patience,  restore_best_weights=True)]
+
 
 features_test = features[test_mask]
 A_test = np.array(A)[test_mask,:][:,test_mask]
