@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import networkx as nx
-
+import time
 import os
 import csv
 
@@ -123,7 +123,7 @@ A = tf.convert_to_tensor(A, tf.float32)
 # print('Graph info: ', nx.info(G))
 
 l2 = 5e-4
-rate = 0.4
+rate = 0.6
 epochs = 200
 learning_rate = 0.01
 patience = 100
@@ -148,6 +148,7 @@ model.compile(optimizer=optimizer,
               weighted_metrics=['acc'])
 
 print(model.summary())
+start = time.time()
 
 validation_data = ([features, A], labels_encoded, val_mask)
 model.fit([features, A],
@@ -166,6 +167,9 @@ A_test = np.array(A)[test_mask,:][:,test_mask]
 y_test = labels_encoded[test_mask]
 
 y_pred = model.predict([features, A], batch_size=num_nodes)
+end = time.time()
+usedTime = end - start
 
 report = classification_report(np.argmax(y_test,axis=1), np.argmax(y_pred[test_mask],axis=1), target_names=classes)
 print('GAT Classification Report: \n {}'.format(report))
+print(usedTime)
